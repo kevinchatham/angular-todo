@@ -1,0 +1,32 @@
+<div class="flex justify-between items-center w-full pb-4">
+    <h2 class="text-2xl text-center">Create Task</h2>
+    <mat-icon (click)="closeDialog()"
+              class="cursor-pointer">close</mat-icon>
+</div>
+<div class="flex flex-col self-center">
+    <form>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>I need to...</mat-label>
+                <input type="text"
+                       matInput
+                       [maxlength]="maxLength"
+                       [formControl]="control">
+                <mat-hint align="end">{{maxLength - control.value.length}} characters remaining</mat-hint>
+                <mat-error *ngIf="control.hasError('required')">
+                    Required.
+                </mat-error>
+                <mat-error *ngIf="control.hasError('invalidCharacters')">
+                    Only a-z A-Z 0-9 ,.:?!% are allowed.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col items-center mt-2">
+            <button [disabled]="!control.valid"
+                    (click)="save()"
+                    mat-raised-button
+                    color="primary"
+                    type="submit">Save</button>
+        </div>
+    </form>
+</div>

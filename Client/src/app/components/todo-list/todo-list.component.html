@@ -1,0 +1,12 @@
+<h2 class="text-xl text-center">Todo List</h2>
+<div *ngIf="todos.length > 0;else elseBlock"
+     class="my-5 border-solid border-2 border-slate-500 rounded-lg">
+    <mat-list>
+        <mat-list-item *ngFor="let todo of todos">{{todo.value}}</mat-list-item>
+    </mat-list>
+</div>
+<ng-template #elseBlock>
+    <h4 class="my-5">
+        Everything is done :)
+    </h4>
+</ng-template>

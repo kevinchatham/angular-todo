@@ -1,5 +1,5 @@
-using System;
 using Microsoft.EntityFrameworkCore;
+using Server.Models.Database;
 
 namespace Server.Database;
 
@@ -10,13 +10,4 @@ public class AppDbContext : DbContext
     { }
 
     public DbSet<Todo> Todos { get; set; }
-}
-
-public class Todo
-{
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public DateTime CreatedUtc { get; set; } = DateTime.UtcNow;
-    public DateTime? CompletedUtc { get; set; }
-    public string Value { get; set; }
-    public bool Completed => CompletedUtc.HasValue;
 }

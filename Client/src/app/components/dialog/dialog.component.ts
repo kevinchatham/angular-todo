@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { single } from 'rxjs';
 import { TodoService } from 'src/app/services/todo.service';
-import { Todo } from 'src/interfaces/Todo';
+import { TodoDto } from 'src/interfaces/TodoDto';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
-
+export class DialogComponent {
   maxLength = 30;
-  control = new FormControl('', [
+
+  control: FormControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(this.maxLength),
     characterValidator(/[a-zA-Z0-9,.:?!%]/i)
@@ -21,15 +21,9 @@ export class DialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>, public todoService: TodoService) { }
 
-  ngOnInit(): void {
-  }
-
   save(): void {
-    let todo: Todo = {
-      id: '',
-      value: this.control.value,
-      createdUtc: '',
-      completedUtc: ''
+    let todo: TodoDto = {
+      value: this.control.value
     };
 
     this.todoService

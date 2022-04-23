@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Server.Database;
+using Server.Models.Database;
+using Server.Models.Dto;
 
 namespace Server.Functions;
 
@@ -31,8 +32,12 @@ public class CreateTodo
         using (StreamReader streamReader = new StreamReader(req.Body))
             requestBody = await streamReader.ReadToEndAsync();
 
-        var todo = JsonConvert.DeserializeObject<Todo>(requestBody);
-        todo.CreatedUtc = DateTime.UtcNow;
+        var todoDto = JsonConvert.DeserializeObject<TodoDto>(requestBody);
+
+        var todo = new Todo()
+        {
+            Value = todoDto.Value
+        };
 
         await _db.AddAsync(todo);
         await _db.SaveChangesAsync();

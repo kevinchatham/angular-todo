@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Todo } from 'src/interfaces/Todo';
+import { TodoDto } from 'src/interfaces/TodoDto';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 
 @Injectable()
 export class TodoService {
     constructor(private http: HttpClient) { }
 
-    get(): Observable<Todo[]> {
-        return this.http.get<Todo[]>("http://localhost:7071/api/GetTodo")
+    getAll(): Observable<TodoDto[]> {
+        return this.http.get<TodoDto[]>("http://localhost/api/GetTodo")
             .pipe(
                 retry(3),
                 catchError(this.handleError)
             );
     }
 
-    create(todo: Todo): Observable<Todo> {
-        return this.http.post<Todo>('http://localhost:7071/api/CreateTodo', todo)
+    create(todo: TodoDto): Observable<TodoDto> {
+        return this.http.post<TodoDto>('http://localhost/api/CreateTodo', todo)
             .pipe(
                 retry(3),
                 catchError(this.handleError)
@@ -24,7 +24,7 @@ export class TodoService {
     }
 
     delete(id: String): Observable<void> {
-        return this.http.delete<void>(`http://localhost:7071/api/DeleteTodo?Id=${id}`)
+        return this.http.delete<void>(`http://localhost/api/DeleteTodo?Id=${id}`)
     }
 
     private handleError(error: HttpErrorResponse) {

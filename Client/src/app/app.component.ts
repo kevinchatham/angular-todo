@@ -22,7 +22,37 @@ export class AppComponent implements OnInit {
   }
 
   emitTodos(todos: TodoDto[]) {
-    this.todosSubject.next(todos);
+    let sorted = todos.sort((a, b) => {
+      return this.sortFn(a.completed, b.completed) || this.sortFn(a.value, b.value)
+    });
+
+    this.todosSubject.next(sorted);
+  }
+
+  private sortFn(a: any, b: any): number {
+    return a === b ? 0 : a < b ? -1 : 1;
+  }
+
+  todoCompleted(todo: TodoDto) {
+    this.todoService.complete(todo.id)
+      .pipe(single())
+      .subscribe(todo => {
+        let current = this.todosSubject.getValue();
+        let index = current.indexOf(todo);
+        current[index] = todo;
+        this.emitTodos(current);
+      });
+  }
+
+  todoDeleted(todo: TodoDto) {
+    this.todoService.delete(todo.id)
+      .pipe(single())
+      .subscribe(empty => {
+        let current = this.todosSubject.getValue();
+        let index = current.indexOf(todo);
+        current.splice(index, 1);
+        this.emitTodos(current);
+      });
   }
 
   openDialog(): void {

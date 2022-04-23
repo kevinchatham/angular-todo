@@ -4,6 +4,9 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+   <PackageReference Include="Aliencube.AzureFunctions.Extensions.DependencyInjection" Version="2.2.0.1" />
+   <PackageReference Include="AutoMapper" Version="11.0.1" />
+   <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />

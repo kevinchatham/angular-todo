@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,26 +14,37 @@ using Server.Models.Dto;
 
 namespace Server.Functions;
 
-public class GetTodo
+public class CompleteTodo
 {
     readonly AppDbContext _db;
     readonly IMapper _mapper;
 
-    public GetTodo(AppDbContext db, IMapper mapper)
+    public CompleteTodo(AppDbContext db, IMapper mapper)
     {
         _db = db;
         _mapper = mapper;
     }
 
-    [FunctionName("GetTodo")]
+    [FunctionName("CompleteTodo")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
         ILogger log)
     {
-        var todos = await _db.Todos.ToListAsync();
+        string queryId = req.Query["id"];
 
-        var dtos = _mapper.Map<List<TodoDto>>(todos);
+        var id = Guid.Parse(queryId);
 
-        return new OkObjectResult(dtos);
+        var todo = await _db.Todos.SingleAsync(x => x.Id.Equals(id));
+
+        if (!todo.Completed)
+        {
+            todo.CompletedUtc = DateTime.UtcNow;
+            _db.Update(todo);
+            await _db.SaveChangesAsync();
+        }
+
+        var dto = _mapper.Map<TodoDto>(todo);
+
+        return new OkObjectResult(dto);
     }
 }

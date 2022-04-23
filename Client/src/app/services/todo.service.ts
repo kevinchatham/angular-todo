@@ -27,6 +27,10 @@ export class TodoService {
         return this.http.delete<void>(`http://localhost/api/DeleteTodo?Id=${id}`)
     }
 
+    complete(id: String): Observable<TodoDto> {
+        return this.http.get<TodoDto>(`http://localhost/api/CompleteTodo?Id=${id}`)
+    }
+
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             console.error('An error occurred:', error.error);

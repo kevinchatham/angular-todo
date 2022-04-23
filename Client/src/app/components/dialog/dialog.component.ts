@@ -23,7 +23,11 @@ export class DialogComponent {
 
   save(): void {
     let todo: TodoDto = {
-      value: this.control.value
+      id: '',
+      createdIso: '',
+      completedIso: '',
+      value: this.control.value,
+      completed: false
     };
 
     this.todoService

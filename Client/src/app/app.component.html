@@ -1,7 +1,11 @@
 <app-toolbar></app-toolbar>
 
 <div class="app-container pt-8">
-  <app-todo-list [events]="todosSubject.asObservable()"></app-todo-list>
+  <app-todo-list [todos]="todosSubject.asObservable()"
+                 (todoCompleted)="todoCompleted($event)"
+                 (todoDeleted)="todoDeleted($event)">
+  </app-todo-list>
+
   <button (click)="openDialog()"
           mat-mini-fab
           color="primary">

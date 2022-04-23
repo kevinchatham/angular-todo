@@ -37,11 +37,6 @@ export class TodoListComponent implements OnInit {
   }
 
   delete(todo: TodoDto) {
-    // // * cheap fix for emit event not making round trip...
-    // let index = this._todos.indexOf(todo);
-    // this._todos.splice(index, 1);
-    // // todo fix above
-
     this.todoDeleted.emit(todo);
   }
 }

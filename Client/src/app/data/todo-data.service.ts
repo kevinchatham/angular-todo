@@ -3,7 +3,7 @@ import {
     EntityCollectionServiceBase,
     EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { TodoDto } from '../interfaces/TodoDto';
+import { TodoDto } from '../interfaces/todo-dto.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TodoDataService extends EntityCollectionServiceBase<TodoDto> {

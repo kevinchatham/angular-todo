@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TodoDto } from 'src/app/interfaces/TodoDto';
+import { TodoDto } from 'src/app/interfaces/todo-dto.interface';
 import { characterValidator } from 'src/app/validators/character.validator';
 import { FormControl, Validators } from '@angular/forms';
 import { TodoDataService } from 'src/app/data/todo-data.service';

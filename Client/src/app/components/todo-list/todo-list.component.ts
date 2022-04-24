@@ -20,6 +20,7 @@ export class TodoListComponent {
   }
 
   complete(todo: TodoDto) {
+    if (todo.completed) return;
     let edited: TodoDto = { ...todo };
     edited.completed = true;
     this.service.update(edited);

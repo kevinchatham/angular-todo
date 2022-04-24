@@ -11,22 +11,22 @@ using Microsoft.Extensions.Logging;
 using Server.Database;
 using Server.Models.Dto;
 
-namespace Server.Functions;
+namespace Server.Functions.Todos;
 
-public class GetTodo
+public class GetAll
 {
     readonly AppDbContext _db;
     readonly IMapper _mapper;
 
-    public GetTodo(AppDbContext db, IMapper mapper)
+    public GetAll(AppDbContext db, IMapper mapper)
     {
         _db = db;
         _mapper = mapper;
     }
 
-    [FunctionName("GetTodo")]
+    [FunctionName("GetAllTodos")]
     public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "todos")] HttpRequest req,
         ILogger log)
     {
         var todos = await _db.Todos.ToListAsync();

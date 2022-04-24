@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TodoDto } from 'src/app/interfaces/TodoDto';
-import { Store } from '@ngrx/store';
-import { add } from 'src/app/store/todo.actions';
-import { AppState } from 'src/app/store/app.state';
 import { characterValidator } from 'src/app/validators/character.validator';
 import { FormControl, Validators } from '@angular/forms';
+import { TodoDataService } from 'src/app/data/todo-data.service';
 
 @Component({
   selector: 'app-dialog',
@@ -23,18 +21,18 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    private store: Store<AppState>) { }
+    private service: TodoDataService) { }
 
   save(): void {
     const todo: TodoDto = {
       id: '',
-      createdIso: '',
-      completedIso: '',
       value: this.control.value,
       completed: false
     };
 
-    this.store.dispatch(add({ todo: todo }));
+    this.service.add(todo);
+
+    this.dialogRef.close();
   }
 
   closeDialog(): void {

@@ -1,20 +1,21 @@
 <h2 class="text-xl text-center">Todo List</h2>
-<!-- *ngIf="todos$.length > 0;else elseBlock" -->
-<div class="my-5 border-solid border-2 border-slate-500 rounded-lg">
+<div *ngIf="(todos$ | async)?.length == 0;else elseBlock">
+    <h4 class="my-5">
+        No tasks to complete.
+    </h4>
+</div>
+<ng-template #elseBlock
+             class="my-5 border-solid border-2 border-slate-500 rounded-lg">
     <mat-list>
         <mat-list-item *ngFor="let todo of todos$ | async">
-            <mat-checkbox (change)="complete(todo)"
+            <mat-checkbox (click)="complete(todo)"
                           [checked]="todo.completed"
-                          [disabled]="todo.completed"></mat-checkbox>
+                          [disabled]="todo.completed">
+            </mat-checkbox>
             <mat-icon (click)="delete(todo)"
                       class="cursor-pointer mr-4 ml-2"
                       color="error">delete</mat-icon>
             <span>{{todo.value}}</span>
         </mat-list-item>
     </mat-list>
-</div>
-<!-- <ng-template #elseBlock>
-    <h4 class="my-5">
-        No tasks to complete.
-    </h4>
-</ng-template> -->
+</ng-template>

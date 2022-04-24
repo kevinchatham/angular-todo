@@ -1,3 +1,7 @@
+# Updates
+
+Go to the [Store Branch](https://github.com/kevinchatham/angular-todo/tree/store) for latest progress.
+
 # Angular Todo
 
 A basic todo application for brushing up on my Angular skills.

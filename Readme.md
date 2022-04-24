@@ -11,6 +11,7 @@ A basic todo application for brushing up on my Angular skills.
 - Angular 13
     - Angular Material
     - Tailwind CSS
+    - NGRX
 
 - Azure Functions on Docker
     - .NET 6

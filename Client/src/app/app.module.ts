@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -39,7 +40,8 @@ const MaterialModules = [
   MatFormFieldModule,
   MatSelectModule,
   MatInputModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatProgressSpinnerModule
 ];
 
 const Components = [

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { TodoDataService } from 'src/app/data/todo-data.service';
 import { TodoDto } from 'src/app/interfaces/todo-dto.interface';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -10,8 +12,10 @@ import { TodoDto } from 'src/app/interfaces/todo-dto.interface';
 })
 export class TodoListComponent {
   todos$: Observable<TodoDto[]> = this.service.entities$
+  loading$: Observable<Boolean> = this.service.loading$
+  loaded$: Observable<Boolean> = this.service.loaded$
 
-  constructor(private service: TodoDataService) {
+  constructor(private service: TodoDataService, public dialog: MatDialog) {
     this.service.getAll()
   }
 
@@ -23,5 +27,13 @@ export class TodoListComponent {
 
   delete(todo: TodoDto) {
     this.service.delete(todo.id);
+  }
+
+  openDialog(): void {
+    let dialogConfig: MatDialogConfig = {
+      disableClose: true
+    };
+
+    this.dialog.open(DialogComponent, dialogConfig);
   }
 }

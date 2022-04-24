@@ -1,21 +1,36 @@
 <h2 class="text-xl text-center">Todo List</h2>
-<div *ngIf="(todos$ | async)?.length == 0;else elseBlock">
-    <h4 class="my-5">
-        No tasks to complete.
-    </h4>
+
+<div *ngIf="loading$|async; else loaded"
+     class="my-5 flex justify-center">
+    <mat-spinner diameter="50"
+                 color="primary"></mat-spinner>
 </div>
-<ng-template #elseBlock
-             class="my-5 border-solid border-2 border-slate-500 rounded-lg">
-    <mat-list>
-        <mat-list-item *ngFor="let todo of todos$ | async">
-            <mat-checkbox (click)="complete(todo)"
-                          [checked]="todo.completed"
-                          [disabled]="todo.completed">
-            </mat-checkbox>
-            <mat-icon (click)="delete(todo)"
-                      class="cursor-pointer mr-4 ml-2"
-                      color="error">delete</mat-icon>
-            <span>{{todo.value}}</span>
-        </mat-list-item>
-    </mat-list>
+<ng-template #loaded>
+    <div *ngIf="(todos$ | async)?.length == 0;else list">
+        <h4 class="my-5">
+            No tasks to complete.
+        </h4>
+    </div>
+    <ng-template #list
+                 class="my-5 border-solid border-2 border-slate-500 rounded-lg">
+        <mat-list>
+            <mat-list-item *ngFor="let todo of todos$ | async">
+                <mat-checkbox (click)="complete(todo)"
+                              [checked]="todo.completed"
+                              [disabled]="todo.completed">
+                </mat-checkbox>
+                <mat-icon (click)="delete(todo)"
+                          class="cursor-pointer mr-4 ml-2"
+                          color="error">delete</mat-icon>
+                <span>{{todo.value}}</span>
+            </mat-list-item>
+        </mat-list>
+        <div class="flex justify-center mt-4">
+            <button (click)="openDialog()"
+                    mat-mini-fab
+                    color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </ng-template>
 </ng-template>

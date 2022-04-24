@@ -9,19 +9,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  todosSubject: BehaviorSubject<TodoDto[]> = new BehaviorSubject<TodoDto[]>([]);
+export class AppComponent {
   constructor(
-    public dialog: MatDialog
   ) { }
-
-  ngOnInit(): void { }
-
-  openDialog(): void {
-    let dialogConfig: MatDialogConfig = {
-      disableClose: true
-    };
-
-    this.dialog.open(DialogComponent, dialogConfig);
-  }
 }

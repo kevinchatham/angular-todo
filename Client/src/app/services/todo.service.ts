@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { TodoDto } from 'src/interfaces/TodoDto';
+import { TodoDto } from 'src/app/interfaces/TodoDto';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 
 @Injectable()

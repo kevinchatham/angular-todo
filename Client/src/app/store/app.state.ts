@@ -1,0 +1,3 @@
+import { TodoRootState } from './todo.reducer';
+
+export type AppState = TodoRootState; // & OtherRootState  & ...

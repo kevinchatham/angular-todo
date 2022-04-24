@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { single } from 'rxjs';
-import { TodoService } from 'src/app/services/todo.service';
-import { TodoDto } from 'src/interfaces/TodoDto';
+import { TodoDto } from 'src/app/interfaces/TodoDto';
+import { Store } from '@ngrx/store';
+import { add } from 'src/app/store/todo.actions';
+import { AppState } from 'src/app/store/app.state';
+import { characterValidator } from 'src/app/validators/character.validator';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog',
@@ -19,10 +21,12 @@ export class DialogComponent {
     characterValidator(/[a-zA-Z0-9,.:?!%]/i)
   ]);
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, public todoService: TodoService) { }
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    private store: Store<AppState>) { }
 
   save(): void {
-    let todo: TodoDto = {
+    const todo: TodoDto = {
       id: '',
       createdIso: '',
       completedIso: '',
@@ -30,23 +34,10 @@ export class DialogComponent {
       completed: false
     };
 
-    this.todoService
-      .create(todo)
-      .pipe(single())
-      .subscribe(todo => {
-        this.dialogRef.close(todo);
-      });
+    this.store.dispatch(add({ todo: todo }));
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
-}
-
-export function characterValidator(expression: RegExp): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value) return null;
-    const allowed = expression.test(control.value);
-    return allowed ? null : { invalidCharacters: { value: control.value } };
-  };
 }

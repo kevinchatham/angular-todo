@@ -1,42 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, single, Subscription } from 'rxjs';
-import { TodoService } from 'src/app/services/todo.service';
-import { TodoDto } from 'src/interfaces/TodoDto';
+import { TodoDto } from 'src/app/interfaces/TodoDto';
+import { AppState } from 'src/app/store/app.state';
+import { loadTodos } from 'src/app/store/todo.actions';
+import { selectTodos } from 'src/app/store/todo.selectors';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss']
 })
-export class TodoListComponent implements OnInit {
-  private eventsSubscription: Subscription = new Subscription();
-  @Input() todos!: Observable<TodoDto[]>;
-  @Output() todoCompleted: EventEmitter<TodoDto> = new EventEmitter<TodoDto>();
-  @Output() todoDeleted: EventEmitter<TodoDto> = new EventEmitter<TodoDto>();
+export class TodoListComponent implements OnInit, OnDestroy {
 
-  _todos: TodoDto[] = [];
+  todos$: Observable<TodoDto[]> = this.store.select(selectTodos);
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.eventsSubscription = this.todos.subscribe(todos => this._todos = todos);
+    this.store.dispatch(loadTodos())
   }
 
-  ngOnDestroy() {
-    this.eventsSubscription.unsubscribe();
-  }
+  ngOnDestroy() { }
 
-  complete(todo: TodoDto) {
-    // * cheap fix for emit event not making round trip...
-    todo.completed = true;
-    let index = this._todos.indexOf(todo);
-    this._todos[index] = todo;
-    // todo fix above
+  complete(todo: TodoDto) { }
 
-    this.todoCompleted.emit(todo)
-  }
-
-  delete(todo: TodoDto) {
-    this.todoDeleted.emit(todo);
-  }
+  delete(todo: TodoDto) { }
 }

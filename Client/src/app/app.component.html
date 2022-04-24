@@ -1,9 +1,7 @@
 <app-toolbar></app-toolbar>
 
 <div class="app-container pt-8">
-  <app-todo-list [todos]="todosSubject.asObservable()"
-                 (todoCompleted)="todoCompleted($event)"
-                 (todoDeleted)="todoDeleted($event)">
+  <app-todo-list>
   </app-todo-list>
 
   <button (click)="openDialog()"

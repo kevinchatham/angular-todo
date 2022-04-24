@@ -23,6 +23,11 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { TodoEffects } from './store/todo.effects';
+import { todoReducer } from './store/todo.reducer';
+
 let MaterialModules = [
   BrowserAnimationsModule,
   MatToolbarModule,
@@ -49,7 +54,9 @@ let MaterialModules = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MaterialModules
+    MaterialModules,
+    StoreModule.forRoot({ todo: todoReducer }),
+    EffectsModule.forRoot([TodoEffects])
   ],
   providers: [TodoService],
   bootstrap: [AppComponent]

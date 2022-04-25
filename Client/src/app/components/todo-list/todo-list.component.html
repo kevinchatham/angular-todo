@@ -10,6 +10,13 @@
         <h4 class="my-5">
             No tasks to complete.
         </h4>
+        <div class="flex justify-center mt-4">
+            <button (click)="openDialog()"
+                    mat-mini-fab
+                    color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
     <ng-template #list
                  class="my-5 border-solid border-2 border-slate-500 rounded-lg">

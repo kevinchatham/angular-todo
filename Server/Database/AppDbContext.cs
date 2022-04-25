@@ -14,9 +14,9 @@ public class AppDbContext : DbContext
     {
         var seedValue = Environment.GetEnvironmentVariable("Seed");
 
-        var seed = Boolean.Parse(seedValue);
+        var parsable = Boolean.TryParse(seedValue, out bool seed);
 
-        if (seed)
+        if (parsable && seed)
         {
             modelBuilder.Entity<Todo>().HasData(
                         new Todo
